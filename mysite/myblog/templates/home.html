@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Post</h1>
+
+{% for post in object_list %}
+    <a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a> by {{ post.author }} <br/><br/>
+    Date Posted - {{ post.date_added }}  <br/><br/><br/>
+    {{ post.body | safe }}<br/><br/>
+<hr>
+{% endfor %}
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Back</a>
+        {% endif %}
+
+        <span class="current">
+            {{ page_obj.number }} from {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

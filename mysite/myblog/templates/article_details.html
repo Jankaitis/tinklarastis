@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+    {% block title %}
+        {{ blogpost.title }}
+    {% endblock %}
+{% block content %}
+
+<h1>{{ blogpost.title }}</h1>
+<strong>Author: {{ blogpost.author}} <br/>
+    Upload date: {{ blogpost.date_added }}<br/></strong>
+
+<hr>
+{{ blogpost.body | safe}}
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-light">Go Back</a>
+{% if user.is_authenticated %}
+    {% if user.id == blogpost.author.id %}
+        <a href="{% url 'update_post' blogpost.pk %}" class="btn btn-light">Edit</a>
+        <a href="{% url 'delete_post' blogpost.pk %}" class="btn btn-light">Delete</a>
+    {% endif %}
+{% endif %}
+
+{% endblock %}
